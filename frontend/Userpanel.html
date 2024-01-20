@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="Styles.css">
+    <style>
+        #sidenav {
+            display: none; 
+        }
+    </style>
+</head>
+<body>
+    <div class="pg-content">
+        <div class="main-btn"> 
+            <button class="viewbtn btn btn-outline-primary" id="view">View</button>
+        </div>
+        <div class="container">
+            <div class="form">
+                <div class="inname">
+                    <label for="nameInput">Name</label>
+                    <div class="input-group input-group-lg">
+                        <input type="text" class="form-control" id="nameInput" placeholder="" aria-label="Username" aria-describedby="addon-wrapping">
+                    </div>
+                </div>
+
+                <div class="image-preview">
+                    <label for="imageInput">Photo</label>
+                    <input type="file" class="form-control" id="imageInput" accept="image/*" style="display: none;">
+                    <button class="btn btn-primary" onclick="document.getElementById('imageInput').click();">Choose Image</button>
+                    <div class="img" id="imagePreview"></div>
+                </div>
+                <div class="upd-btn">
+                    <button class="btn btn-primary" onclick="uploadDetails()">Upload</button>
+                </div>
+            </div>
+        </div>
+<div class="sidenav" id="sidenav">
+    <div class="container">
+        <div><button class=" back-btn btn btn-outline-primary" id="clsbtn">Back</button></div>
+        <label>Name</label>
+        <div class="input-group input-group-lg">
+            <input type="text" class="form-control" placeholder="" aria-label="Username"
+                aria-describedby="addon-wrapping">
+            </div>
+            
+            <div class="image-preview">
+                <label>Photo</label>
+                <div class="img" style="width: 100%;"></div>
+            </div>
+           
+            <div><strong style="color:red">Not Accepted!!</strong></div>
+    </div>
+   </div>
+</div>
+        <script>
+           document.addEventListener("DOMContentLoaded", function() {
+            const nav = document.getElementById("sidenav");
+            const openbtn = document.getElementById("view");
+            const closebtn = document.getElementById("clsbtn")
+
+            // Add click event listener to the button
+            openbtn.addEventListener("click", function() {
+                // Toggle the visibility of the navigation
+                if (nav.style.display === "none" || nav.style.display === "") {
+                    nav.style.display = "block";
+                } else {
+                    nav.style.display = "none";
+                }
+            });
+            closebtn.addEventListener("click", function() {
+                // Toggle the visibility of the navigation
+                if (nav.style.display === "block" || nav.style.display === "") {
+                    nav.style.display = "none";
+                } else {
+                    nav.style.display = "block";
+                }
+            });
+        });
+        </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const userId = urlParams.get('userId');
+    
+            fetch(`http://localhost:4400/users/Details?userId=${userId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    UserID: userId,
+                }),
+            })
+            .then(response => response.json())
+            .then(details => {
+                console.log('User details:', details);
+            })
+            .catch(error => {
+                console.error('Error fetching user details:', error);
+            });
+        });
+    </script>
+     <script>
+        function previewImage() {
+            const input = document.getElementById("imageInput");
+            const preview = document.getElementById("imagePreview");
+
+            while (preview.firstChild) {
+                preview.removeChild(preview.firstChild);
+            }
+
+            const file = input.files[0];
+
+            if (file) {
+                const reader = new FileReader();
+
+                reader.onload = function(e) {
+                    const img = document.createElement("img");
+                    img.src = e.target.result;
+                    img.style.width = "100%";
+                    preview.appendChild(img);
+                };
+
+                reader.readAsDataURL(file);
+            }
+        }
+
+        async function uploadDetails() {
+    const name = document.getElementById("nameInput").value;
+    const imageInput = document.getElementById("imageInput");
+    const urlParams = new URLSearchParams(window.location.search);
+    const userId = urlParams.get('userId');
+
+    // Validate input
+    if (!name || !imageInput.files[0]) {
+        alert("Please provide both Name and Image for registration");
+        return;
+    }
+
+    const formData = new FormData();
+    formData.append("UserID", userId); 
+    formData.append("Name", name);
+    formData.append("image", imageInput.files[0]);
+
+    try {
+        const response = await fetch("http://localhost:4400/adding/registerdetails", {
+            method: 'POST',
+            body: formData,
+        });
+        const result = await response.json();
+        console.log('Details has been registered successfully:', result.detail);
+    } catch (error) {
+        console.error('Error registering Details:', error);
+        console.log('Error registering Details. Please try again.');
+    }
+}
+
+        document.getElementById("imageInput").addEventListener("change", previewImage);
+    </script>
+
+</body>
+</html>

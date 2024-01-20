@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Login</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="Styles.css">
+</head>
+
+<body>
+
+    <div class="main">
+        <div class="left">
+
+        </div>
+        <div class="right">
+            <div class="section">
+                <div class="heading-label">
+                    <h1>User Login</h1>
+                </div>
+                <div class="form-inputs">
+                    <div class="input-group input-group-lg">
+                        <input type="text" class="form-control" id="userIdInput" placeholder="User Id"
+                            aria-label="Username" aria-describedby="addon-wrapping">
+                    </div>
+                    <div class="input-group input-group-lg">
+                        <input type="password" class="form-control" id="passwordInput" placeholder="Password"
+                            aria-label="Password" aria-describedby="addon-wrapping">
+                    </div>
+
+                </div>
+                <div>
+                    <button class="login-btn btn btn-primary" onclick="submitForm()">Login</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+    <script>
+        function submitForm() {
+            const userId = document.getElementById("userIdInput").value;
+            const password = document.getElementById("passwordInput").value;
+
+            // Make an AJAX request to your backend
+            fetch('http://localhost:4400/user/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    Userid: userId,
+                    Pass: password,
+                }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.message === 'Login successful') {
+                    alert('Login successful');
+                    window.location.href = `UserPanel.html?userId=${userId}`;
+                } else {
+                    alert('Login failed. Please check your credentials.');
+                }
+            })
+            .catch(error => {
+                console.error('Error during login:', error);
+                alert('Internal Server Error. Please try again later.');
+            });
+        }
+    </script>
+</body>
+
+</html>

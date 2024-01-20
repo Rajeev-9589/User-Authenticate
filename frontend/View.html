@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="Styles.css">
+</head>
+<body>
+    <div class="content">
+        <button class="back-btn btn btn-outline-primary"> < Back </button>
+    </div>
+    <div class="table">
+      <table class="table table-bordered border border-dark" id="table-content">
+        <thead>
+          <tr>
+            <th scope="col">User ID</th>
+            <th scope="col">Name</th>
+            <th scope="col">Photo</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody id="table-body">
+          <!-- Table body will be populated dynamically -->
+        </tbody>
+      </table>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+      crossorigin="anonymous"></script>
+    
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        // Fetch data from the server
+        fetch('http://localhost:4400/users/Details')
+          .then(response => response.json())
+          .then(data => {
+            // Populate the table with the received data
+            const tableBody = document.getElementById('table-body');
+            data.forEach(user => {
+              const row = document.createElement('tr');
+              row.innerHTML = `
+                <th scope="row">${user.userId}</th>
+                <td>${user.name}</td>
+                <td><div class="userimg"> <img src="${user.photo}" alt="${user.name}"></div></td>
+                <td>
+                  <button class="btn btn-primary m-3">Done</button>
+                  <button class="btn btn-outline-primary">Delete</button>
+                </td>
+              `;
+              tableBody.appendChild(row);
+            });
+          })
+          .catch(error => console.error('Error fetching data:', error));
+      });
+    </script>
+</body>
+</html>

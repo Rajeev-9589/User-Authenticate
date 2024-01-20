@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="Styles.css">
+</head>
+<body>
+    <div class="Dashboard-main">
+        <div class="Dash-left">
+            <div class="Dash-section">
+                <div class="Dash-label">
+                    <h1>Create User</h1>
+                </div>
+                <div class="form-inputs">
+                    <div class="inputs-1">
+                        <label for="userid">User id</label>
+                        <input type="text" id="userid" class="form-control" placeholder="" aria-label="Username"
+                            aria-describedby="addon-wrapping">
+                    </div>
+                    <div class="inputs-1">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" class="form-control" placeholder="" aria-label="Password"
+                            aria-describedby="addon-wrapping">
+                    </div>
+                </div>
+                <div>
+                    <button class="login-btn btn btn-primary" id="registerBtn">Submit</button>
+                </div>
+            </div>
+        </div>
+        <div class="Dash-right">
+            <h1>View User</h1>
+            <div class="section-2" id="userContainer">
+                
+               
+            </div>
+            <div class="View-btn">
+                <button class="view btn btn-primary">View</button>
+              </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+    crossorigin="anonymous"></script>
+
+    <script>
+        document.getElementById('registerBtn').addEventListener('click', async () => {
+            const userid = document.getElementById('userid').value;
+            const password = document.getElementById('password').value;
+
+            try {
+                const response = await fetch('http://localhost:4400/user/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ Userid: userid, Pass: password }),
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    alert(data.message);
+                    
+                } else {
+                    alert(data.message);
+                }
+            } catch (error) {
+                console.error('Error during registration:', error);
+            }
+        });
+        
+        async function fetchAndDisplayUsers() {
+    try {
+      const response = await fetch('http://localhost:4400/fetched/users/All');
+
+      if (!response.ok) {
+        throw new Error(`Error: ${response.status} - ${response.statusText}`);
+      }
+
+      const users = await response.json();
+      displayUsers(users);
+    } catch (error) {
+      console.error('Error fetching users:', error.message);
+    }
+  }
+
+  // Function to dynamically create and append user details to the DOM
+  function displayUsers(users) {
+    const userContainer = document.getElementById('userContainer');
+    let serialNumber = 1;
+
+    users.forEach(user => {
+      const userSection = document.createElement('div');
+      userSection.classList.add('section-2');
+
+      userSection.innerHTML = `
+        <div class="frm-dtl">
+          <div class="box">
+            <strong>${user.userid}</strong>
+          </div>
+          <div class="notice">
+            <div class="circle">${serialNumber}</div>
+          </div>
+        </div>
+       
+      `;
+
+      userContainer.appendChild(userSection);
+      serialNumber++;
+    });
+  }
+
+  // Function to handle the view button click for each user
+  function viewUser(userId) {
+    // Implement the logic to view the user details based on the userId
+    console.log('Viewing user with ID:', userId);
+  }
+
+  // Call the fetchAndDisplayUsers function when the page loads
+  window.onload = function() {
+    fetchAndDisplayUsers();
+  };
+    </script>
+</body>
+</html>

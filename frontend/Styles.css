@@ -1,0 +1,203 @@
+body {
+  margin: 0;
+  padding: 0;
+  color: rgb(66, 66, 66);
+}
+
+.main {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.section {
+  margin-top: 10rem;
+}
+.heading-label {
+  margin-bottom: 2rem;
+}
+.left {
+  position: relative;
+  right: 0;
+  width: 60vw;
+  height: 100vh;
+  background-color: darkblue;
+}
+.right {
+  position: relative;
+  left: 0;
+  width: 40vw;
+  height: 100vh;
+  text-align: center;
+}
+.form-inputs {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  width: 100%;
+  height: auto;
+  padding: 2rem;
+}
+.login-btn {
+  width: 25vw;
+  font: bold;
+}
+
+.Dashboard-main {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.Dash-left {
+  position: relative;
+  left: 0;
+  width: 50vw;
+  height: 100vh;
+  border-right: 2px solid rgb(169, 168, 168);
+}
+.Dash-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  margin-top: 5rem;
+  padding: 3rem;
+}
+.Dash-right {
+  position: relative;
+  right: 0;
+  width: 50vw;
+  height: 100vh;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.inputs-1 {
+  justify-content: left;
+  text-align: justify;
+  width: 20rem;
+}
+
+.frm-dtl {
+  width: 35vw;
+  height: 20vh;
+  border: 1px solid rgb(224, 224, 255);
+  background: rgb(224, 224, 255);
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  padding: 4rem;
+  justify-content: flex-end;
+  margin-bottom: 2rem;
+}
+.box {
+  border: 1px solid rgb(174, 174, 174);
+  border-radius: 5px;
+  width: 35vw;
+  height: 10vh;
+  background-color: #ffff;
+  display: flex;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+}
+
+.circle {
+  border: 1px solid blue;
+  background-color: blue;
+  color: white;
+  border-radius: 50px;
+  height: 2rem;
+  width: 2rem;
+  padding: 2px;
+  font: bold;
+}
+.View-btn {
+  float: right;
+}
+.view {
+  width: 7rem;
+  height: 3rem;
+}
+
+.table {
+  text-align: center;
+  padding: 5rem;
+}
+.content {
+  padding: 2rem;
+}
+.back-btn {
+  width: 5rem;
+  height: 3rem;
+}
+.userimg {
+  height: 5rem;
+  width: 5rem;
+}
+.form {
+  width: 50vw;
+  height: 80vh;
+  border: 3px dashed rgb(191, 189, 189);
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.inname {
+  display: flex;
+  flex-direction: column;
+}
+
+.img {
+  width: 20vw;
+  height: 20vw;
+  background: rgb(230, 229, 229);
+  border: 2px dashed rgb(173, 170, 170);
+}
+.upd-btn {
+  margin-top: 2rem;
+  float: right;
+}
+.main-btn {
+  position: absolute;
+  top: 2rem;
+  right: 5rem;
+  color: darkblue;
+}
+.viewbtn {
+  height: 4rem;
+  width: 7rem;
+}
+.pg-content{
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+.sidenav{
+    position:relative;
+    background: white;
+    height: 100vh;
+    width: 50vw;
+    border: 2px dashed green;
+    padding: 1rem;
+}
+.section-2{
+  width: auto;
+  overflow: auto;
+}
